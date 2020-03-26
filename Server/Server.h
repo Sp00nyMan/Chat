@@ -15,7 +15,10 @@ class Server {
         char buffer[255];
         if(recv(client.socket, buffer, 255, 0) == 0)
             return 0;
+        if(buffer == "exit")
+            return -1;
         chatUpdated.push_back(client.name + ": " + buffer);
+        return 0;
     }
     static void sendMessage(const Client& client)
     {
@@ -53,7 +56,9 @@ public:
             if(clientSocket >= 0)
                 clients.emplace_back("Test", clients.size() + 1, clientSocket);
             for (int i = 0; i < clients.size(); ++i) {
-                reciveMessage(clients[i]);
+                if(reciveMessage(clients[i]) != -1)
+                    continue;
+                clients.erase(clients.begin() + i);
             }
             for (int i = 0; i < clients.size(); ++i) {
                 sendMessage(clients[i]);

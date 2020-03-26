@@ -11,7 +11,7 @@
 .mtj.tmp/
 .idea
 cmake-build-debug
-multichat
+.vscode
 
 # Package Files #
 *.jar
