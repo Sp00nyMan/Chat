@@ -1,10 +1,10 @@
 #include <string>
 
 class Client {
-    std::string name;
-    long int id;
-    int socket;
 public:
+    long int id;
+    std::string name;
+    int socket;
     Client(const std::string& name, long int id, int socket)
     {
         this->name = name;
