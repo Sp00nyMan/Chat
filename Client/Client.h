@@ -1,6 +1,5 @@
 #include <string>
 #include <netinet/in.h>
-#include <strings.h>
 #include <netdb.h>
 #include <libnet.h>
 #include <iostream>

@@ -25,8 +25,7 @@ std::string Client::recive()
 
 Client::Client(const std::string &serverIP, int serverPort)
 {
-    bzero((char*)&serverAddress, sizeof(serverAddress));
-
+    memset((char*)&serverAddress, 0, sizeof(serverAddress));
     serverAddress.sin_family = AF_INET;
     struct hostent* host = gethostbyname(serverIP.c_str());
     serverAddress.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)*host->h_addr_list));
