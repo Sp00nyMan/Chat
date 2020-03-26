@@ -1,5 +1,9 @@
 #include <iostream>
 #include "Server.h"
+std::vector<Client> Server::clients;
+sockaddr_in Server::serverAddress;
+int Server::socket;
+std::vector<std::string> Server::chatUpdated;
 
 int main(int argc, char** argv) {
     if(argc != 2)

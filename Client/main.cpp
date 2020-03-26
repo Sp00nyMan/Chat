@@ -1,7 +1,5 @@
-#include <iostream>
 #include "Client.h"
 #include <ncurses.h>
-#include <sys/types.h>
 
 int main(int argc, char** argv) {
     if(argc != 3)
@@ -17,15 +15,18 @@ int main(int argc, char** argv) {
     Client client(argv[1], atoi(argv[2]));
     while(true)
     {
+        waddstr(chatWindow, client.recive().c_str());
         std::cout << "> ";
         char buffer[255];
         wgetstr(writeWindow, buffer);
-        if(buffer == "exit"){
-            client.send("exit");
+        if(std::string(buffer) == "exit"){
+            client.send(std::string("exit"));
             break;
         }
-        client.send(buffer);
-        waddstr(chatWindow, client.recive().c_str());
+        client.send(std::string(buffer));
+        wrefresh(chatWindow);
+        wrefresh(writeWindow);
     }
+    endwin();
     return 0;
 }

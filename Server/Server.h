@@ -10,14 +10,17 @@ class Server {
     static sockaddr_in serverAddress;
     static int socket;
     static std::vector<std::string> chatUpdated;
+
     static int reciveMessage(const Client& client)
     {
+        std::cout << "Reciving\n";
         char buffer[255];
-        if(recv(client.socket, buffer, 255, 0) == 0)
+        if(try_recv(client.socket, buffer, 255, 0) == 0)
             return 0;
         if(buffer == "exit")
             return -1;
         chatUpdated.push_back(client.name + ": " + buffer);
+        std::cout << "Recived\n";
         return 0;
     }
     static void sendMessage(const Client& client)
@@ -28,6 +31,7 @@ class Server {
         }
         send(client.socket, bufferConsole.c_str(), bufferConsole.length(), 0);
     }
+
 public:
     static void initialize(int port)
     {
@@ -48,11 +52,14 @@ public:
 
     static void start(){
         listen(socket, 5);
+        std::cout << "Started!!!\n";
         while(true)
         {
+            std::cout << "CYCLE" << std::endl;
             sockaddr_in clientAddress{};
             socklen_t clientAddressSize;
             int clientSocket = accept(socket, (sockaddr*)&clientAddress, &clientAddressSize);
+            std::cout << "accepted\n";
             if(clientSocket >= 0)
                 clients.emplace_back("Test", clients.size() + 1, clientSocket);
             for (int i = 0; i < clients.size(); ++i) {
